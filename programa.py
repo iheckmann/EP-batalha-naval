@@ -1,3 +1,6 @@
+import random
+
+
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
     if orientacao == "horizontal":
@@ -137,8 +140,8 @@ tabuleiro_jogador = posiciona_frota(frota)
 tabuleiro_oponente = posiciona_frota(frota_oponente)
 
 jogadas_feitas = []
+jogadas_oponente = []
 jogando = True
-
 
 while jogando:
     print(monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente))
@@ -165,3 +168,20 @@ while jogando:
     if afundados(frota_oponente, tabuleiro_oponente) == 10:
         print("Parabéns! Você derrubou todos os navios do seu oponente!")
         jogando = False
+
+    else:
+        linha_op = random.randint(0, 9)
+        coluna_op = random.randint(0, 9)
+
+        while [linha_op, coluna_op] in jogadas_oponente:
+            linha_op = random.randint(0, 9)
+            coluna_op = random.randint(0, 9)
+
+        jogadas_oponente.append([linha_op, coluna_op])
+        print(f"Seu oponente está atacando na linha {linha_op} e coluna {coluna_op}")
+        tabuleiro_jogador = faz_jogada(tabuleiro_jogador, linha_op, coluna_op)
+
+        if afundados(frota, tabuleiro_jogador) == 10:
+            print("Xi! O oponente derrubou toda a sua frota =(")
+            jogando = False
+
